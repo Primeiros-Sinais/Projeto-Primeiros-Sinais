@@ -50,7 +50,7 @@ Caso tenha alguma sugestão ou queira saber mais sobre o projeto, entre em conta
 
 - **Rennan do Prado Oliveira** - rennandopradooliveira@gmail.com
 
-- **Victor Duarte Pereira**
+- **Victor Duarte Pereira** - victordp757@gmail.com
 
 Esperamos que o **Primeiros Sinais** seja uma ferramenta valiosa para a educação inclusiva! 💙
 
