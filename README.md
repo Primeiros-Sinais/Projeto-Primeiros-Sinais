@@ -36,8 +36,6 @@ O **Primeiros Sinais** tem como objetivo auxiliar na alfabetização de criança
 
 Caso tenha alguma sugestão ou queira saber mais sobre o projeto, entre em contato com a equipe!
 
-Caso tenha alguma sugestão ou queira saber mais sobre o projeto, entre em contato com a equipe!
-
 **📧 E-mails:**
 
 - **E-mail do projeto** - primeirossinais@gmail.com
