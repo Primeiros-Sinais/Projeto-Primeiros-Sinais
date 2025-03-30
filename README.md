@@ -42,7 +42,7 @@ Caso tenha alguma sugestão ou queira saber mais sobre o projeto, entre em conta
 
 - **Diemini Alves dos Santos** - dieminialvesdossantos25@gmail.com
 
-- **Eduardo Gomes de Lima**
+- **Eduardo Gomes de Lima** - eduardogomes56@hotmail.com
 
 - **Ester Julia Lira da Silva** - e.julia.silva007@gmail.com
 
