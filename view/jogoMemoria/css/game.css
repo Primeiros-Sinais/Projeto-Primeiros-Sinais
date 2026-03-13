@@ -1,17 +1,107 @@
-body{
-    overflow: hidden;
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    border: none;
+    font-family: cherryBomb;
+    letter-spacing: 1px;
 }
-#fundo{
-    position: absolute;
-    height: 110%;
+
+@font-face {
+    font-family: cherryBomb;
+    src: url(../../css/font/Cherry\ Bomb/cherry-bomb-regular-1.ttf);
+}
+
+/* ======================= LOGIN ======================= */
+.login-form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.login__header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.login__header img {
+    width: 225px;
+}
+
+.login__header h1 {
+    color: #333;
+    font-size: 45px;
+}
+
+.login__input {
+    border: 2px solid #333;
+    border-radius: 8px;
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 15px;
     width: 100%;
+    max-width: 300px;
+    outline: none;
+    padding: 15px;
 }
+
+.login__button {
+    background-color: #ee665c;
+    font-size: 2em;
+    width: 100%;
+    max-width: 300px;
+
+    display: flex;
+    align-items: center;
+    font-family: cherryBomb;
+    border-radius: 15px;
+    border: none;
+    color: #f5f5f5;
+    transition: 1.5s;
+    text-align: center;
+    padding: 0.3em 2em;
+    font-size: 2.25rem;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.login__button:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: auto;
+}
+
+#blue {
+    color: #587ddc;
+}
+
+#red {
+    color: #f43840;
+}
+
+#green {
+    color: #5aad5a;
+}
+
+/* ======================= GAME ======================= */
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px 20px 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.main_game {
+    width: 100%;
+    max-width: 800px;
 }
 
 header {
@@ -29,62 +119,121 @@ header {
     border-radius: 5px;
 }
 
+.header_login {
+    position: absolute;
+    top: 15px;
+}
+
+body {
+    background-image: url("../../img/MicrosoftTeams-image.png");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial;
+}
+
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 2fr);
-    gap: 8px;
-    width: 100%;
-    max-width: 650px;
-    margin: 0 auto;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    width: 500px;
 }
 
 .card {
-   aspect-ratio: 3/4;
-   width: 79%;
-   border-radius: 5px;
-   position: relative;
-   transition: all 400ms ease;
-   transform-style: preserve-3d;
-   background-color: #fff;
+    aspect-ratio: 3/4;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    cursor: pointer;
 }
 
 .face {
     width: 100%;
     height: 100%;
     position: absolute;
+    border-radius: 10px;
     background-size: cover;
     background-position: center;
-    border: 2px solid black;
-    border-radius: 5px;
-    transition: all 400ms ease;
+    backface-visibility: hidden;
 }
 
 .front {
+    background-color: #ffffff;
     transform: rotateY(180deg);
-   
+    border-radius: 10px;
+    transition: filter 0.4s;
+}
+
+.matched {
+    transform: rotateY(180deg);
+    cursor: default;
+    box-shadow: 0 0 10px #00ff88;
+}
+
+.frontDesfoque {
+    filter: saturate(0);
 }
 
 .back {
-    background-color: #0D9CED;
+    background-color: #0d9ced;
     backface-visibility: hidden;
-    
 }
 
 .reveal-card {
     transform: rotateY(180deg);
 }
 
-.disabled-card {
-    filter: saturate(0);
-    opacity: 0,5;
+.bgcolor6 {
+    background: #ffa500;
 }
 
+.toast {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
+    background: rgba(0, 0, 0, 0.6);
 
-.rowBtn{
-    z-index: 1;
-    transition: 1s;
-    position: absolute;
-    left: 4%;
-    top: -1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: 0.3s;
+}
+
+.toast.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.toast-content {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.toast-content h2 {
+    margin-bottom: 10px;
+}
+
+.toast-content button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #0d9ced;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }

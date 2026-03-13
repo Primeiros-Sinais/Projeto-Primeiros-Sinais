@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+        <link rel="stylesheet" href="./css/reset.css" />
+        <link rel="stylesheet" href="./css/game.css" />
+        <link rel="stylesheet" href="../css/styleVogais.css" />
+        <link rel="stylesheet" href="../css/style.css" />
+
+        <script defer src="./js/game.js"></script>
+
+        <title>Jogo da Memória</title>
+    </head>
+    <body>
+        <main class="main_game">
+            <header class="menuVogais">
+                <button
+                    class="btn bgcolor6"
+                    onclick="location.href = './logar.html'"
+                >
+                    Voltar
+                </button>
+
+                <span class="player"></span>
+                <span>Tempo: <span class="timer">00</span></span>
+            </header>
+
+            <div class="grid"></div>
+        </main>
+        <div class="toast" id="toast">
+            <div class="toast-content">
+                <h2>🎉 Parabéns!</h2>
+                <p id="toast-player"></p>
+                <p id="toast-time"></p>
+                <button onclick="location.reload()">Jogar novamente</button>
+            </div>
+        </div>
+    </body>
+</html>

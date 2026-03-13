@@ -1,175 +1,160 @@
-const grid = document.querySelector('.grid');
-const spanPlayer = document.querySelector('.player');
-const timer = document.querySelector('.timer');
+const grid = document.querySelector(".grid");
+const playerSpan = document.querySelector(".player");
+const timerSpan = document.querySelector(".timer");
 
 const characters = [
-    'pena',
-    'maca',
-    'flor',
-    'cogumelo',
-    'arara',
-    'laranja',
-    'nuvem',
-    'banana',
+    "pena",
+    "maca",
+    "flor",
+    "cogumelo",
+    "arara",
+    "laranja",
+    "nuvem",
+    "banana",
 ];
-const letras = [
-    'pena',
-    'maca',
-    'flor',
-    'cogumelo',
-    'arara',
-    'laranja',
-    'nuvem',
-    'banana',
-];
+
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
 
 const createElement = (tag, className) => {
- const element = document.createElement(tag);
- element.className = className;
- return element;
-}
+    const element = document.createElement(tag);
+    element.className = className;
 
-let firstCard = '';
-let secondCard = '';
+    return element;
+};
 
 const checkEndGame = () => {
-    const enabledCards = document.querySelectorAll('.enabled-card');
+    const matchedCards = document.querySelectorAll(".matched");
 
-    if (enabledCards.length == 16){
-        clearInterval(this.loop);
-        setTimeout(() => { alert(`Parabéns ${spanPlayer.innerHTML}, você completou o jogo da memória! Seu tempo foi de: ${timer.innerHTML} segundos.`); }, 500);
+    if (matchedCards.length === 16) {
+        clearInterval(timerLoop); // PARA O TEMPO
+
+        setTimeout(() => {
+            showToast();
+        }, 500);
     }
-}
+};
 
 const checkCards = () => {
-    const firstCharacter = firstCard.getAttribute('data-character');
-    const secondCharacter = secondCard.getAttribute('data-character');
-    
-    if (firstCharacter == secondCharacter){
+    const firstCharacter = firstCard.dataset.character;
+    const secondCharacter = secondCard.dataset.character;
 
-        firstCard.firstChild.classList.remove('disabled-card');
-        secondCard.firstChild.classList.remove('disabled-card');
-        
-        firstCard.firstChild.classList.add('enabled-card');
-        secondCard.firstChild.classList.add('enabled-card');
-        
-        firstCard = '';
-        secondCard = '';
-        
-        checkEndGame();
-        
+    if (firstCharacter === secondCharacter) {
+        setTimeout(() => {
+            // pega a frente da carta
+            const firstFront = firstCard.querySelector(".front");
+            const secondFront = secondCard.querySelector(".front");
+
+            // remove o desfoque
+            firstFront.classList.remove("frontDesfoque");
+            secondFront.classList.remove("frontDesfoque");
+
+            // trava as cartas
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+
+            resetBoard();
+            checkEndGame();
+        }, 800);
     } else {
         setTimeout(() => {
+            firstCard.classList.remove("reveal-card");
+            secondCard.classList.remove("reveal-card");
 
-            firstCard.classList.remove('reveal-card');
-            secondCard.classList.remove('reveal-card');
-            
-            firstCard = '';
-            secondCard = '';
-            
-        }, 500);
-        
-        
+            resetBoard();
+        }, 800);
     }
-}  
+};
+
+const resetBoard = () => {
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+};
 
 const revealCard = ({ target }) => {
-    
-    if (target.parentNode.className.includes('reveal-card')){
+    const card = target.parentNode;
+
+    if (lockBoard) return;
+    if (card.classList.contains("reveal-card")) return;
+    if (card.classList.contains("matched")) return;
+
+    card.classList.add("reveal-card");
+
+    if (!firstCard) {
+        firstCard = card;
         return;
     }
-    
-    if (firstCard == ''){
-        target.parentNode.classList.add('reveal-card');
-        firstCard = target.parentNode;
-        firstCard.firstChild.classList.add('disabled-card');
-        
-    } else if (secondCard == ''){
-        target.parentNode.classList.add('reveal-card');
-        secondCard = target.parentNode;
-        secondCard.firstChild.classList.add('disabled-card');
-        
-        checkCards();
-        
-    }
-    
-    
-}
 
-const createCard = (character) => {
-    const card = createElement('div', 'card');
-    const front = createElement('div', 'face front');
-    const back = createElement('div', 'face back');
+    secondCard = card;
 
-    front.style.backgroundImage = `url('../imagens/${character}.png')`;
+    lockBoard = true;
+
+    checkCards();
+};
+
+const createCard = (character, type) => {
+    const card = createElement("div", "card");
+    const front = createElement("div", "face front frontDesfoque");
+    const back = createElement("div", "face back");
+
+    front.style.backgroundImage = `url('./imagens/${type}/${character}.png')`;
 
     card.appendChild(front);
     card.appendChild(back);
 
-    card.addEventListener('click' , revealCard);
-    card.setAttribute('data-character', character)
-    
+    card.addEventListener("click", revealCard);
+    card.setAttribute("data-character", character);
+
     return card;
-}
-
-const createCards = (character) => {
-    const card = createElement('div', 'card');
-    const front = createElement('div', 'face front');
-    const back = createElement('div', 'face back');
-
-    front.style.backgroundImage = `url('../imagens/sinais/${character}.png')`;
-
-    card.appendChild(front);
-    card.appendChild(back);
-
-    card.addEventListener('click' , revealCard);
-    card.setAttribute('data-character', character)
-    
-    return card;
-}
+};
 
 const loadGame = () => {
+    const cards = [];
 
-    const duplicateCharacters = [ ...characters];
+    characters.forEach((character) => {
+        cards.push({
+            name: character,
+            type: "sinais",
+        });
 
-    const Characters = duplicateCharacters.sort(() => Math.random() - 0.5);
-
-    Characters.forEach((character) => {
-        
-        const card = createCard(character);
-        grid.appendChild(card);
-
+        cards.push({
+            name: character,
+            type: "itens",
+        });
     });
 
-    const duplicateLetters = [ ...letras];
+    const shuffled = cards.sort(() => Math.random() - 0.5);
 
-    const Letras = duplicateLetters.sort(() => Math.random() - 0.5);
-
-    Letras.forEach((character) => {
-        
-        const card = createCards(character);
+    shuffled.forEach((item) => {
+        const card = createCard(item.name, item.type);
         grid.appendChild(card);
-
     });
-}
+};
 
 const startTimer = () => {
-
-    this.loop = setInterval(() => {
-
-        const currentTime = +timer.innerHTML;
-        timer.innerHTML = currentTime + 1;
-
+    timerLoop = setInterval(() => {
+        const currentTime = +timerSpan.innerHTML;
+        timerSpan.innerHTML = currentTime + 1;
     }, 1000);
-
-}
+};
 
 window.onload = () => {
+    playerSpan.innerHTML = localStorage.getItem("player");
 
-    spanPlayer.innerHTML = localStorage.getItem('player');
     startTimer();
     loadGame();
+};
 
-}
+const showToast = () => {
+    const toast = document.getElementById("toast");
+    const player = localStorage.getItem("player");
+    const time = timerSpan.innerText;
 
+    document.getElementById("toast-player").innerText = `Jogador: ${player}`;
 
+    document.getElementById("toast-time").innerText = `Tempo: ${time} segundos`;
+
+    toast.classList.add("show");
+};
